@@ -1,0 +1,116 @@
+body {
+  height: 100%;
+}
+
+.register {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  margin: 5rem auto;
+  justify-content: center;
+  padding: 1rem 0.05rem;
+  align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  max-height: 100vh;
+  overflow: hidden;
+}
+.register .img-container {
+  height: 100%;
+  width: 55%;
+  object-fit: contain;
+  margin-left: -1rem;
+}
+
+.register .img-container > img {
+  width: 120%;
+  height: 120%;
+}
+
+.register .img-container > img:hover {
+  height: 150%;
+  width: 150%;
+  margin: 0 0 0 -2.5rem;
+  transition-duration: 1s;
+}
+
+.register-container {
+  padding: 1rem;
+  padding-left: 0;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-container .title {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.register-container > form {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  flex-direction: column;
+  line-height: 1.7rem;
+}
+
+.register-container > form > label {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.12rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-container .input {
+  margin: 0.25rem 0rem;
+  border: 0.5px groove rgba(130, 130, 130, 0.329);
+  height: 1.5rem;
+}
+
+.register-container .redirect a {
+  font-size: 0.915rem;
+  text-decoration: none;
+  color: black;
+}
+
+.register-container .button {
+  margin: 1rem 0rem;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+.register-container .button > button {
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 1rem;
+  background-color: #403e57;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.register-container .button > button:hover {
+  background-color: #fff;
+  color: #fad7a0;
+  border: #403e57 0.5px solid;
+  transition-duration: 0.5s;
+}
+
+@media screen and (max-width: 1000px) {
+  .register {
+    width: 75%;
+    transition-duration: 1s;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .register {
+    flex-direction: column;
+    margin-top: 8rem;
+  }
+}
