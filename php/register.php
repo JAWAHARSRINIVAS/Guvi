@@ -24,7 +24,7 @@ require("./connection.php");
             echo "New record created successfully.";
         }
         else{
-            echo "Error : "+$stmt->error;
+            echo "Error : ".$stmt->error;
         }
 
         $stmt->close();

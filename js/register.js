@@ -29,7 +29,7 @@ $(document).ready(function () {
         if (response == 'New record created successfully.') {
           alert('Register successful!');
         } else {
-          alert('Register failed: ' + response);
+          alert('   ' + response);
         }
       },
       error: function (xhr, status, error) {

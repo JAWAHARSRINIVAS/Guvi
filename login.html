@@ -1,45 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>login</title>
-    <link rel="stylesheet" href="./css/login.css">
-</head>
-<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="./css/login.css" />
+  </head>
+  <body>
     <div class="login">
-        <div class="img-container">
-          <img src="./assets/images/Development.png" alt=" GUVI " />
-        </div>
-        <div class="login-container">
-          <div class="title">Account Login</div>
-          <form >
-            <label class=" username">
-              username
-              <input
-                class="input"
-                type="email"
-              />
-            </label>
-            <label class=" password">
-              password
-              <input
-                class="input"
-                type="password"
-              />
-            </label>
-            <div class="forget-pass">
-              <a href="#" >forget password?</a>
-            </div>
-            <div class="redirect">
-                <a href="/register.html" >Create an Account</a>
-            </div>
-            <div class="button">
-              <button>Login</button>
-            </div>
-          </form>
-        </div>
+      <div class="img-container">
+        <img src="./assets/images/Development.png" alt=" GUVI " />
       </div>
-</body>
+      <div class="login-container">
+        <div class="title">Account Login</div>
+        <form id="login-form">
+          <label class="email">
+            Email
+            <input id="email" class="input" type="email" />
+          </label>
+          <label class="password">
+            password
+            <input id="password" class="input" type="password" />
+          </label>
+          <div class="forget-pass">
+            <a href="#">forget password?</a>
+          </div>
+          <div class="redirect">
+            <a href="/register.html">Create an Account</a>
+          </div>
+          <div class="button">
+            <button>Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script src="./js/login.js" ></script>
 </html>
