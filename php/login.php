@@ -73,17 +73,15 @@
 
         $redis = new Predis\Client();
         session_start();
-        $redis->set('user',$email);
-        
+        $redis->set('email',$email);
+        $redis->set('name',$name);
+        $redis->set('password',$password);
+        $redis->set('age',$document['age']);
+        $redis->set('dob',$document['dob']);
+        $redis->set('contact',$document['contact']);
 
         $response = array(
             'msg'   => "success",
-            // 'name'  => $name,
-            // 'email' => $email ,
-            // 'age'   => $document['age'],
-            // 'dob'   => $document['dob'],
-            // 'password'=> $password,
-            // 'contact'=> $document['contact'],
             "sessionId" => session_id()
         );
 

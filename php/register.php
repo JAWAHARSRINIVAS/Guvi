@@ -10,9 +10,11 @@ session_start();
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: *");
     $redis = new Predis\Client();
-    if($redis->get('user'))
+    if(!$redis->exists('email'))
     {
-        echo "session is live";
+        session_destroy();
+        echo "end session";
+        exit();
     }
     else{
         if(isset($_POST['name']) && $_POST['email'] &&   $_POST['password'] && $_POST['age'] && $_POST['dob'] && $_POST['contact'] )

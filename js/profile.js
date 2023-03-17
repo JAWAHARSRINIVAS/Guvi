@@ -23,7 +23,7 @@ $(document).ready(function () {
           $('#dob').text(data['dob']);
           $('#contact').text(data['contact']);
        }else{
-          window.location.href="./register.html"
+          window.location.href="./login.html"
        }
         
       },
@@ -59,7 +59,6 @@ $(document).ready(function () {
           data: {
             name: name,
             email: email,
-            password:"123",
             age: age,
             dob: dob,
             contact: contact,

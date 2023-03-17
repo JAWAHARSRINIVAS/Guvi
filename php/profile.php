@@ -9,17 +9,22 @@ require '../vendor/autoload.php';
 <?php
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: *");
-    
-    if(isset($_POST['name']) && isset($_POST['email']) &&   isset($_POST['password']) && isset($_POST['age']) && isset($_POST['dob']) && isset($_POST['contact']) )
+    $redis = new Predis\Client();
+    if(!$redis->exists('email'))
+    {
+        session_destroy();
+        echo "session ended";
+        exit();
+    }
+    if(isset($_POST['name']) && isset($_POST['email']) && isset($_POST['age']) && isset($_POST['dob']) && isset($_POST['contact']) )
     {
         // MYSQL
         $name = $_POST['name'];
         $email = $_POST['email'];
-        $password = $_POST['password'];
 
 
-        $stmt = $conn->prepare( " UPDATE `user` SET name = ? , password = ?  WHERE email = ? " );
-        $stmt->bind_param("sss",$name  , $password , $email);
+        $stmt = $conn->prepare( " UPDATE `user` SET name = ?  WHERE email = ? " );
+        $stmt->bind_param("ss",$name  , $email);
         
 
         // MONGO DB
@@ -53,15 +58,15 @@ require '../vendor/autoload.php';
 
         if($stmt->execute() && $UpdateResult->getModifiedCount() == 1 ){
             $data = array(
-                'name'  => $name,
-                'email' => $email ,
-                'age'   => $age,
-                'dob'   => $dob,
-                'password'=> $password,
-                'contact'=> $contact,
                 'msg' => "Update success"
             );
-    
+            
+            $redis = new Predis\Client();
+            $redis->set('email',$email);
+            $redis->set('name',$name);
+            $redis->set('age',$age);
+            $redis->set('dob',$dob);
+            $redis->set('contact',$contact);
     
             $json_data = json_encode($data);
             echo $json_data;
@@ -77,57 +82,22 @@ require '../vendor/autoload.php';
         {
             $sessionId = $_POST['sessionId'];
             if($sessionId == 'empty'){
+                $redis = new Predis\Client();
+                $redis->flushall();
                 echo "session ended";
             }
             else{
                 $redis = new Predis\Client();
-                $email = $redis->get('user');
-
-                $name = "";
-        
-                $stmt = $conn->prepare( " SELECT * FROM `user` where email = ? " );
-                $stmt->bind_param("s",$email);
-                if($stmt->execute())
-                {
-                    $result = $stmt->get_result();
-                    if($result->num_rows == 1){
-                        $row = $result->fetch_assoc();
-                        $name = $row['name'];
-                    }
-                    
-                }
-                else{
-                    exit();
-                }
-                
-                $stmt->close();
-        
-        
-        
-                // MONGO DB
-                
-                $client = new MongoDB\Client;
-        
-                $db = $client->guvi;
-        
-                // if (!$db->listCollections(['filter' => ['name' => 'user']])->toArray()) {
-                //     $db->createCollection('user');
-                // } 
-        
-                $collection = $db->user;
-                $document =$collection->findOne(
-                    ['email'=>$email]
-                );
-        
+                $email = $redis->get('email');
                 
         
                 $response = array(
                     'msg'   => "success",
-                    'name'  => $name,
-                    'email' => $email ,
-                    'age'   => $document['age'],
-                    'dob'   => $document['dob'],
-                    'contact'=> $document['contact'],
+                    'name'  => $redis->get('name'),
+                    'email' => $redis->get('email') ,
+                    'age'   => $redis->get('age'),
+                    'dob'   => $redis->get('dob'),
+                    'contact'=> $redis->get('contact'),
                 );
         
                
@@ -138,6 +108,6 @@ require '../vendor/autoload.php';
         session_destroy();
         $redis = new Predis\Client();
         $redis->flushall();
-    }
+    } 
     
 ?>

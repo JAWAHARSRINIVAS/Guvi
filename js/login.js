@@ -7,6 +7,11 @@ $(document).ready(function () {
       'Access-Control-Allow-Origin': '*',
     },
     success: function (response) {
+       console.log(response);
+       if(response.includes("end session"))
+       {
+        localStorage.clear();
+       }
        if(response.includes("session is live"))
        {
           window.location.href="./profile.html";
