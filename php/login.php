@@ -1,17 +1,24 @@
 <?php
 
-require("./connection.php");
+    require("./connection.php");
+    require '../vendor/autoload.php';
+    
+
+
 ?>
 
 <?php
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: *");
 
-    if( isset($_POST['email'] ) &&   isset($_POST['password']) )
+    if(  isset($_POST['email'] ) &&   isset($_POST['password']) )
     {
+        // MYSQL
+        
         $email = $_POST['email'];
         $password = $_POST['password'];
-
+        $name = "";
+        
         $stmt = $conn->prepare( " SELECT * FROM `user` where email = ? " );
         $stmt->bind_param("s",$email);
         if($stmt->execute())
@@ -21,21 +28,69 @@ require("./connection.php");
                 $row = $result->fetch_assoc();
                 if($row['password'] != $password)
                 {
-                    echo "Wrong password";
+                    $response = [ "msg"=>"Wrong password" ];
+                    $json_data = json_encode($response);
+                    echo $json_data;
+                    exit();
                 }
                 else{
-                echo "Record found successfully.";
+                    $name = $row['name'];
                 }
             }
             else{
-                echo "Account not found";
+                $response = [ "msg"=>"Account not found" ];
+                $json_data = json_encode($response);
+                echo $json_data;
+                exit();
             }
         }
         else{
-            echo "Error : ".$stmt->error;
+            $response = [ "msg"=>"Error : ".$stmt->error];
+            $json_data = json_encode($data);
+            echo $json_data;
+            exit();
         }
-
+        
         $stmt->close();
+
+
+
+        // MONGO DB
+        
+        $client = new MongoDB\Client;
+
+        $db = $client->guvi;
+
+        // if (!$db->listCollections(['filter' => ['name' => 'user']])->toArray()) {
+        //     $db->createCollection('user');
+        // } 
+
+        $collection = $db->user;
+        $document =$collection->findOne(
+            ['email'=>$email]
+        );
+
+
+        $redis = new Predis\Client();
+        session_start();
+        $redis->set('user',$email);
+        
+
+        $response = array(
+            'msg'   => "success",
+            // 'name'  => $name,
+            // 'email' => $email ,
+            // 'age'   => $document['age'],
+            // 'dob'   => $document['dob'],
+            // 'password'=> $password,
+            // 'contact'=> $document['contact'],
+            "sessionId" => session_id()
+        );
+
+       
+        $json_data = json_encode($response);
+        echo $json_data;
+
     }
     else   echo "  no detail";
 ?>

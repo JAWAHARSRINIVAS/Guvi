@@ -1,11 +1,14 @@
 .profile {
   width: 100%;
+  width: 60%;
+  min-width: 300px;
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
 }
 
 .profile-header {
@@ -13,6 +16,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
 .profile-header h1 {
@@ -44,4 +48,22 @@
 
 .profile-value {
   font-size: 16px;
+}
+
+
+@media  screen and (max-width:400px){
+  .profile {
+    width: 100%;
+    width: 60%;
+    min-width: 200px;
+    max-width: 350px;
+  }
+  .profile-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .btn{
+    margin-top: 10px;
+  }
 }

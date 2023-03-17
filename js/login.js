@@ -1,4 +1,20 @@
 $(document).ready(function () {
+  
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost/Guvi/php/register.php',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    success: function (response) {
+       if(response.includes("session is live"))
+       {
+          window.location.href="./profile.html";
+       }
+    },
+    
+  });
+
     $('#login-form').submit(function (event) {
       event.preventDefault();
   
@@ -6,6 +22,8 @@ $(document).ready(function () {
       var password = $('#password').val();
 
       console.log(email + "  "+password);
+
+      
 
       $.ajax({
         type: 'POST',
@@ -18,11 +36,17 @@ $(document).ready(function () {
           'Access-Control-Allow-Origin': '*',
         },
         success: function (response) {
-          if (response == "Record found successfully.") {
+          console.log(response);
+          var data = JSON.parse( response );
+          console.log(data);
+          if (data["msg"] == "success") {
             alert('Logined successful!');
+            localStorage.setItem('sessionId',data['sessionId']);
+            window.location.href = './profile.html';
           } else {
-            alert('Login : ' + response);
+            alert('Login : ' + data['msg']);
           }
+          
         },
         error: function (xhr, status, error) {
           alert('Login failed : ' + error);
@@ -31,3 +55,4 @@ $(document).ready(function () {
     });
   });
   
+

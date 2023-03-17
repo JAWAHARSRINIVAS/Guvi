@@ -26,8 +26,9 @@ $(document).ready(function () {
         'Access-Control-Allow-Origin': '*',
       },
       success: function (response) {
-        if (response == 'New record created successfully.') {
+        if (response == "New record created successfully") {
           alert('Register successful!');
+          window.location.href = './login.html';
         } else {
           alert('   ' + response);
         }
