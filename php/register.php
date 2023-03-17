@@ -54,7 +54,7 @@ session_start();
             );
 
             if($stmt->execute() && $data->getInsertedCount() == 1 ){
-                echo "New record created successfully";
+                echo "success";
             }
             else{
                 echo "Error : ".$stmt->error;

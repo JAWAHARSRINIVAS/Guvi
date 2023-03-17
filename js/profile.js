@@ -65,13 +65,14 @@ $(document).ready(function () {
             contact: contact,
           },
           success: function (response) {
-            if (response.includes("Update success")) {
+            var data = JSON.parse(response);
+            if (data['msg'].includes("Update success")) {
               alert('Updated successful');
-              
+              localStorage.setItem('user',response);
             } else {
               alert('Update : ', response);
             }
-            localStorage.setItem('user',response);
+            
           },
           error: function (xhr, status, error) {
             alert('Update Failed : ', error);

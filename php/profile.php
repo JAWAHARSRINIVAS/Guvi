@@ -58,7 +58,8 @@ require '../vendor/autoload.php';
                 'age'   => $age,
                 'dob'   => $dob,
                 'password'=> $password,
-                'contact'=> $contact
+                'contact'=> $contact,
+                'msg' => "Update success"
             );
     
     
